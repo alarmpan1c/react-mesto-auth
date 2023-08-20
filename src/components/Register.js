@@ -17,9 +17,9 @@ export default function Register({ handleRegister }) {
         name='email'
         type='email'
         placeholder={'Email'}
+        isInputValid={solidLine.email}
         value={dataInput.email}
         onChange={handleTransitForm}
-        isInputValid={solidLine.email}
         error={validText.email}
       />
       <Input
@@ -28,8 +28,8 @@ export default function Register({ handleRegister }) {
         placeholder={'Пароль'}
         minLength={3}
         value={dataInput.password}
-        onChange={handleTransitForm}
         isInputValid={solidLine.password}
+        onChange={handleTransitForm}
         error={validText.password}
       />
     </RegistrationForm>

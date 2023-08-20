@@ -18,18 +18,18 @@ export default function Login({ handleLogin }) {
         type='email'
         placeholder={'Email'}
         value={dataInput.email}
-        onChange={handleTransitForm}
         isInputValid={solidLine.email}
+        onChange={handleTransitForm}
         error={validText.email}
       />
       <Input
         name='password'
         type='password'
-        placeholder={'Пароль'}
         minLength={3}
+        placeholder={'Пароль'}
         value={dataInput.password}
-        onChange={handleTransitForm}
         isInputValid={solidLine.password}
+        onChange={handleTransitForm}
         error={validText.password}
       />
     </RegistrationForm>

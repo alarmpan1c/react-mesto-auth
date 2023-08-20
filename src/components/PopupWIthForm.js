@@ -26,7 +26,7 @@ function PopupWithForm({name, title,  subtitle, children, isOpen, onClose, valid
                 <button 
                 //{className={`popup__button-submit ${validState ? '' : 'popup__button-submit_invalid'}`}}
                 className={
-                    `${name === 'signin' || name === 'signup' ? 'login__button' : 'popup__button_submit'}
+                    `${name === 'signin' || name === 'signup' ? 'login__button' : 'popup__button-submit'}
                   
                     ${validState ? '' : (name === 'signin' || name === 'signup' ? 'login__button_disable' : 'popup__button-submit_invalid')}`
                   }

@@ -4,15 +4,7 @@ import Card from "./Card"
 import Register from "./Register"
 import Login from "./Login"
 import CurrentUserContext from "../context/CurrentUserContexts"
-
-
-
 //import { memo, useContext } from "react"
-
-
-
-
-
 
 const Main = memo(({name,  onAddPlace, onEditProfile, onEditAvatar,  onDeletePlace, onCardClick, cards, handleLogin , handleRegister}) => {
     // const [userName, setUserName] = useState('')
@@ -70,12 +62,6 @@ const Main = memo(({name,  onAddPlace, onEditProfile, onEditAvatar,  onDeletePla
                      : 
                      <Login handleLogin={handleLogin} /> 
              } 
-
-
-
-
-
-
         </main>
     )
 })

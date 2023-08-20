@@ -1,18 +1,18 @@
 //import logo from './logo.svg';
 import { createContext, useCallback, useEffect, useState } from "react";
+import Main from "./Main";
 import CurrentUserContext from "../context/CurrentUserContexts";
 import api from "../utils/api";
 import Header from "./Header";
-import Main from "./Main";
 import Footer from "./Footer";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
 import InfoTooltip from "./InfoTooltip";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import PopupWithForm from "./PopupWIthForm";
-import ProtectedRoute from "./ProtectedRoute"
+import ProtectedRoute from "./ProtectedRoute";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { getUserData, authorization, auth } from "../utils/auth"
 //import { paste } from "@testing-library/user-event/dist/paste";
 //не надо
@@ -23,14 +23,14 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
-  const [isPictureOnPopup, setIsPictureOnPopup] = useState(false);
-  const [isSend, setIsSend] = useState(false)
-  const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({})
   const [infoUser, setinfoUser] = useState([])
   const [cards, setCards] = useState([]);
   const [idCardForErase, setIdCardForErase] = useState('');
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [isPictureOnPopup, setIsPictureOnPopup] = useState(false);
+  const [isSend, setIsSend] = useState(false)
+  const [selectedCard, setSelectedCard] = useState({});
   const [isSuccessful, setIsSuccessful] = useState(false)
   const [isError, setIsError] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
@@ -38,11 +38,11 @@ function App() {
   const closeAllPopup = useCallback(() => {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
+    setIsError(false)
     setIsEditAvatarPopupOpen(false)
-    setIsDeletePopupOpen(false)
     setIsPictureOnPopup(false)
     setIsSuccessful(false)
-    setIsError(false)
+    setIsDeletePopupOpen(false)
   }, [])
 
   const closeByEscape = useCallback((evt) => {
@@ -72,19 +72,10 @@ function App() {
           setLoggedIn(true)
           navigate('/')
         })
-        .catch(error => console.log(`Ощибка повторного входа при авторизации ${error}`))
+        .catch(error => console.log(`Ошибка повторного входа при авторизации ${error}`))
     }
   }, [navigate])
 
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true)
-    listnerEscape()
-  }
-
-  function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true)
-    listnerEscape()
-  }
 
   function handleDeleteClick(IDofCard) {
     setIsDeletePopupOpen(true)
@@ -95,6 +86,16 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card)
     setIsPictureOnPopup(true)
+    listnerEscape()
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true)
+    listnerEscape()
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true)
     listnerEscape()
   }
 
@@ -134,6 +135,19 @@ function App() {
       .finally(() => closeAllPopupForm(false))
   }
 
+  function handleUpdataAvatar(data, eraseInpup) {
+    api.setAvataronServer(data)
+      .then(res => {
+        setCurrentUser(res)
+
+        closeAllPopupForm()
+
+        eraseInpup()
+      })
+      .catch((error => console.log('Ошибка при загрузке данных аватара на сервера', error)))
+      .finally(() => closeAllPopupForm(false))
+  }
+
   function handleUpdataUser(data, eraseInpup) {
     console.log(data)
     api.setInfoonServer(data)
@@ -146,19 +160,6 @@ function App() {
       })
       .catch((error => console.log('Ошибка при загрузке данных пользователя на сервера', error)))
       .finally(() => closeAllPopup(false))
-  }
-
-  function handleUpdataAvatar(data, eraseInpup) {
-    api.setAvataronServer(data)
-      .then(res => {
-        setCurrentUser(res)
-
-        closeAllPopupForm()
-
-        eraseInpup()
-      })
-      .catch((error => console.log('Ошибка при загрузке данных аватара на сервера', error)))
-      .finally(() => closeAllPopupForm(false))
   }
 
   function handleAddPlaceSubmit(data, eraseInpup) {
@@ -182,7 +183,7 @@ function App() {
       })
       .catch(err => {
         setIsError(true)
-        console.log(`Ощибка во время авторизации ${err}`)
+        console.log(`Ошибка во время авторизации ${err}`)
       })
       .finally(() => {
         setIsSend(false)
@@ -223,7 +224,7 @@ function App() {
               cards={cards}
               loggedIn={loggedIn} />
             } />
-            <Route path='/sigh-up' element={
+            <Route path='/sign-up' element={
               <>
                 <Header name='signup' />
                 <Main name='signup' handleRegister={handleRegister} />
