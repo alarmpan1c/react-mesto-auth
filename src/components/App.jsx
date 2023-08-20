@@ -199,10 +199,10 @@ function App() {
         setIsError(true)
         console.log(`Ошибка во время регистрации ${err}`)
       })
-      .finally(() => {
-        setIsSend(false)
-        closeAllPopupForm(false)
-      })
+      //.finally(() => {
+      //  setIsSend(false)
+      //  closeAllPopupForm(false)
+      //})
   }
 
   return (
