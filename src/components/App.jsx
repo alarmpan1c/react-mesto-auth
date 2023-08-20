@@ -14,10 +14,7 @@ import PopupWithForm from "./PopupWIthForm";
 import ProtectedRoute from "./ProtectedRoute";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { getUserData, authorization, auth } from "../utils/auth"
-//import { paste } from "@testing-library/user-event/dist/paste";
-//не надо
-//import { useState } from "react";
-//import Card from "./Card";
+
 function App() {
   const navigate = useNavigate()
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
