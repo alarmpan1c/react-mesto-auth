@@ -159,7 +159,6 @@ function App() {
       })
       .catch((error => console.log('Ошибка при загрузке данных аватара на сервера', error)))
       .finally(() => closeAllPopupForm(false))
-
   }
 
   function handleAddPlaceSubmit(data, eraseInpup) {
