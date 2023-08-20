@@ -18,6 +18,16 @@ export function auth(password, email) {
   .then(res => getResponseData(res))
 }
 
+export function getUserData(token) {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization" : `Bearer ${token}`
+    }})
+    .then(res => getResponseData(res))
+  }
+
 export function authorization(password, email) {
   return fetch(`${baseUrl}/signin`, {
     method: 'POST',
@@ -31,13 +41,3 @@ export function authorization(password, email) {
   })
   .then(res => getResponseData(res))
 }
-
-export function getUserData(token) {
-  return fetch(`${baseUrl}/users/me`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      "Authorization" : `Bearer ${token}`
-    }})
-    .then(res => getResponseData(res))
-  }
