@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import PopupWithForm from "./PopupWIthForm"
-import useFormValidation from "./ValidationForm"
+import useFormValidation from "../hooks/ValidationForm"
 
 export default function EditAvatarPopup({ onUpdateAvatar, isOpen, onClose }) {
 

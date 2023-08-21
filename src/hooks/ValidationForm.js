@@ -6,9 +6,6 @@ export default function useFormValidation() {
     const [validState, setValidState] = useState(false)//anable button
 
     const [solidLine, setSolidLine] = useState({})//solitline
-    
-
-   
 
     function eraseInpup(data = {}) {
         setValidState(false)//anable button
@@ -44,8 +41,6 @@ export default function useFormValidation() {
         setSolidLine((data) => {
             return { ...data, [name]: verify }
         })
-
-       
     }
 
     return { dataInput, validText, validState, solidLine, handleTransitForm, eraseInpup, initialInput }

@@ -12,6 +12,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import InfoTooltip from "./InfoTooltip";
 import PopupWithForm from "./PopupWIthForm";
 import ProtectedRoute from "./ProtectedRoute";
+import CombinedHeaderMain from "./CombinedHeaderMain";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { getUserData, authorization, auth } from "../utils/auth"
 
@@ -21,7 +22,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({})
-  const [infoUser, setinfoUser] = useState([])
+  const [infoUser, setinfoUser] = useState('')
   const [cards, setCards] = useState([]);
   const [idCardForErase, setIdCardForErase] = useState('');
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
@@ -129,7 +130,6 @@ function App() {
         closeAllPopupForm()
       })
       .catch((err) => console.log('Ошибка удаления карточки'))
-      .finally(() => closeAllPopupForm(false))
   }
 
   function handleUpdataAvatar(data, eraseInpup) {
@@ -142,7 +142,6 @@ function App() {
         eraseInpup()
       })
       .catch((error => console.log('Ошибка при загрузке данных аватара на сервера', error)))
-      .finally(() => closeAllPopupForm(false))
   }
 
   function handleUpdataUser(data, eraseInpup) {
@@ -156,7 +155,6 @@ function App() {
         eraseInpup()
       })
       .catch((error => console.log('Ошибка при загрузке данных пользователя на сервера', error)))
-      .finally(() => closeAllPopup(false))
   }
 
   function handleAddPlaceSubmit(data, eraseInpup) {
@@ -167,7 +165,6 @@ function App() {
         eraseInpup()
       })
       .catch((error => console.log('Ошибка при загрузке данных карточки на сервера', error)))
-      .finally(() => closeAllPopupForm(false))
   }
 
   function handleLogin(password, email) {
@@ -199,28 +196,27 @@ function App() {
         setIsError(true)
         console.log(`Ошибка во время регистрации ${err}`)
       })
-      //.finally(() => {
-      //  setIsSend(false)
-      //  closeAllPopupForm(false)
-      //})
+    //.finally(() => {
+    //  setIsSend(false)
+    //  closeAllPopupForm(false)
+    //})
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <>
 
-        <SendContext.Provider value={isSend}>
-          <Routes>
-            <Route path='/' element={<ProtectedRoute
+      <SendContext.Provider value={isSend}>
+        <Routes>
+          <Route path='/' element={<ProtectedRoute loggedIn={loggedIn} />}>
+            <Route path='/' element={<CombinedHeaderMain
               dataUser={infoUser}
               onAddPlace={handleAddPlaceClick}
               onEditProfile={handleEditProfileClick}
               onEditAvatar={handleEditAvatarClick}
               onDeletePlace={handleDeleteClick}
               onCardClick={handleCardClick}
-              cards={cards}
-              loggedIn={loggedIn} />
-            } />
+              cards={cards} />} />
+            </Route>
             <Route path='/sign-up' element={
               <>
                 <Header name='signup' />
@@ -235,64 +231,63 @@ function App() {
               </>
             } />
             <Route path='*' element={<Navigate to='/' />} />
-          </Routes>
-        </SendContext.Provider>
+        </Routes>
+      </SendContext.Provider>
 
-        <Footer />
+      <Footer />
 
-        <SendContext.Provider value={isSend}>
+      <SendContext.Provider value={isSend}>
 
-          <EditAvatarPopup
-            onUpdateAvatar={handleUpdataAvatar}
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopupForm}
-          />
-
-          <EditProfilePopup
-            onUpdateUser={handleUpdataUser}
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopupForm}
-
-          />
-
-          <AddPlacePopup
-            onAddPlace={handleAddPlaceSubmit}
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopupForm}
-          />
-
-          <PopupWithForm
-            name='delete'
-            title='Вы уверены?'
-            subtitle='Да'
-            isOpen={isDeletePopupOpen}
-            onClose={closeAllPopupForm}
-            onSubmit={handleCardDelete}
-          />
-        </SendContext.Provider>
-
-        {/* Открытие карточки - изоражение из карточки*/}
-        <ImagePopup
-          cardPic={selectedCard}
-          onClose={closeAllPopupForm}
-          isOpen={isPictureOnPopup}
-        />
-
-        <InfoTooltip
-          name='successful'
-          titleText={'Регистрация успешно завершена'}
-          isOpen={isSuccessful}
+        <EditAvatarPopup
+          onUpdateAvatar={handleUpdataAvatar}
+          isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopupForm}
         />
 
-        <InfoTooltip
-          name='error'
-          titleText={'Регистрация не завершена'}
-          isOpen={isError}
+        <EditProfilePopup
+          onUpdateUser={handleUpdataUser}
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopupForm}
+
+        />
+
+        <AddPlacePopup
+          onAddPlace={handleAddPlaceSubmit}
+          isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopupForm}
         />
 
-      </>
+        <PopupWithForm
+          name='delete'
+          title='Вы уверены?'
+          subtitle='Да'
+          isOpen={isDeletePopupOpen}
+          onClose={closeAllPopupForm}
+          onSubmit={handleCardDelete}
+        />
+      </SendContext.Provider>
+
+      {/* Открытие карточки - изоражение из карточки*/}
+      <ImagePopup
+        cardPic={selectedCard}
+        onClose={closeAllPopupForm}
+        isOpen={isPictureOnPopup}
+      />
+
+      <InfoTooltip
+        name='successful'
+        titleText={'Регистрация успешно завершена'}
+        isOpen={isSuccessful}
+        onClose={closeAllPopupForm}
+      />
+
+      <InfoTooltip
+        name='error'
+        titleText={'Регистрация не завершена'}
+        isOpen={isError}
+        onClose={closeAllPopupForm}
+      />
+
     </CurrentUserContext.Provider>
   );
 }

@@ -1,5 +1,5 @@
 import RegistrationForm from "./RegistrationForm";
-import useFormValidation from "./ValidationForm";
+import useFormValidation from "../hooks/ValidationForm";
 import Input from "./Input";
 
 

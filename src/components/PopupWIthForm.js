@@ -1,16 +1,10 @@
-
 import GeneralPop from "./GeneralPop";
 //import { createContext } from "react";
-
-
 
 function PopupWithForm({name, title,  subtitle, children, isOpen, onClose, validState = true, onSubmit }) {
 
    // const SendContext = createContext();
    // const isSend = useContext(SendContext);
-
-
-
 
     return (
         <GeneralPop
@@ -18,7 +12,7 @@ function PopupWithForm({name, title,  subtitle, children, isOpen, onClose, valid
             onClose={onClose}
             isOpen={isOpen}
         >
-            <form className="popup__form" name={`form-profile_${name}`} action="#" method="get" noValidate="" onSubmit={onSubmit}>
+            <form className="popup__form" name={`form-profile_${name}`} noValidate="" onSubmit={onSubmit}>
                 <h2 className="popup__title">{title}</h2>
                 <div className="popup__content">
                 </div>

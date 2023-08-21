@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWIthForm";
-import ValidationForm from "./ValidationForm";
+import ValidationForm from "../hooks/ValidationForm";
 
 export default function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
 
